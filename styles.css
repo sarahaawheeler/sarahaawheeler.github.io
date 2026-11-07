@@ -27,27 +27,29 @@ body::before {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.55;
+  opacity: 0.60;
 
-  background-image:
-    repeating-radial-gradient(
-      ellipse 520px 320px at 12% 16%,
-      transparent 0 22px,
-      rgba(160, 126, 121, 0.12) 22px 23.5px,
-      transparent 24px 44px
-    ),
-    repeating-radial-gradient(
-      ellipse 640px 380px at 88% 22%,
-      transparent 0 24px,
-      rgba(160, 126, 121, 0.10) 24px 25.5px,
-      transparent 26px 48px
-    ),
-    repeating-radial-gradient(
-      ellipse 760px 420px at 35% 78%,
-      transparent 0 26px,
-      rgba(160, 126, 121, 0.08) 26px 27.5px,
-      transparent 28px 52px
-    );
+  
+background-image:
+  repeating-radial-gradient(
+    ellipse 520px 320px at 12% 16%,
+    transparent 0 22px,
+    rgba(168, 199, 216, 0.20) 22px 23.5px,
+    transparent 24px 44px
+  ),
+  repeating-radial-gradient(
+    ellipse 640px 380px at 88% 22%,
+    transparent 0 24px,
+    rgba(168, 199, 216, 0.17) 24px 25.5px,
+    transparent 26px 48px
+  ),
+  repeating-radial-gradient(
+    ellipse 760px 420px at 35% 78%,
+    transparent 0 26px,
+    rgba(168, 199, 216, 0.14) 26px 27.5px,
+    transparent 28px 52px
+  );
+
 }
 a { color: inherit; text-decoration: none; }
 a:hover { color: var(--accent); }
@@ -89,26 +91,6 @@ nav { display: flex; gap: 26px; font-size: 13px; color: #494b47; }
   border-radius: 50% / 42%;
 }
 
-.intro-portrait::before {
-  content: "";
-  position: absolute;
-  z-index: 0;
-
-  width: 180px;
-  height: 210px;
-  top: -35px;
-  left: -35px;
-
-  background: repeating-radial-gradient(
-    ellipse at 50% 50%,
-    transparent 0px,
-    transparent 11px,
-    rgba(100, 125, 140, 0.28) 12px,
-    transparent 13px
-  );
-
-  pointer-events: none;
-}
 
 h1 { font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: clamp(26px, 2.5vw, 34px); line-height: 1.2; letter-spacing: -0.05em; margin: 0 0 25px; }
 .intro p { max-width: 605px; margin: 0 0 12px; color: var(--muted); font-size: 15px; }
@@ -146,13 +128,6 @@ h3 { margin: 0; font-weight: 550; font-size: 15px; letter-spacing: -.01em; }
   .headshot {
     width: 76px;
     height: 98px;
-  }
-
-  .intro-portrait::before {
-    width: 125px;
-    height: 145px;
-    top: -18px;
-    left: -20px;
   }
 
   .site-shell { padding: 0 22px; }
