@@ -19,25 +19,60 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 .site-name { font-weight: 600; letter-spacing: -0.025em; white-space: nowrap; }
 nav { display: flex; gap: 26px; font-size: 13px; color: #494b47; }
 .intro { padding: 79px 0 74px; }
+
+/* Intro layout */
+
+.intro-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 110px;
+  gap: 35px;
+  align-items: center;
+}
+
+.intro-text {
+  min-width: 0;
+}
+
+/* Small headshot */
+
+.intro-portrait {
+  position: relative;
+  width: 110px;
+  justify-self: end;
+  isolation: isolate;
+}
+
+.headshot {
+  display: block;
+  position: relative;
+  z-index: 1;
+  width: 110px;
+  height: 140px;
+  object-fit: cover;
+  object-position: center 30%;
+  border-radius: 2px;
+}
 .intro-portrait::before {
   content: "";
   position: absolute;
-  width: 220px;
-  height: 260px;
+  z-index: 0;
+
+  width: 180px;
+  height: 210px;
   top: -35px;
   left: -35px;
-  z-index: -1;
-  opacity: 0.38;
 
-  background:
-    repeating-radial-gradient(
-      ellipse at 55% 45%,
-      transparent 0px,
-      transparent 15px,
-      rgba(100, 120, 130, 0.12) 16px,
-      transparent 17px
-    );
+  background: repeating-radial-gradient(
+    ellipse at 50% 50%,
+    transparent 0px,
+    transparent 11px,
+    rgba(100, 125, 140, 0.28) 12px,
+    transparent 13px
+  );
+
+  pointer-events: none;
 }
+
 h1 { font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: clamp(26px, 2.5vw, 34px); line-height: 1.2; letter-spacing: -0.05em; margin: 0 0 25px; }
 .intro p { max-width: 605px; margin: 0 0 12px; color: var(--muted); font-size: 15px; }
 .intro .lead { font-size: 18px; line-height: 1.7; color: #343632; }
@@ -76,12 +111,46 @@ h3 { margin: 0; font-weight: 550; font-size: 15px; letter-spacing: -.01em; }
     height: 145px;
   }
 
+  
+/* Intro layout */
+
+  .intro-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 110px;
+    gap: 35px;
+    align-items: center;
+  }
+
+  .intro-text {
+      min-width: 0;
+  }
+
+
+  .intro-layout {
+    grid-template-columns: minmax(0, 1fr) 85px;
+    gap: 18px;
+    align-items: start;
+  }
+
+  .intro-portrait {
+    width: 85px;
+  }
+
+  .headshot {
+    width: 85px;
+    height: 108px;
+  }
+
   .intro-portrait::before {
-    width: 124px;
-    height: 158px;
-    top: -20px;
+    width: 125px;
+    height: 145px;
+    top: -18px;
     left: -20px;
   }
+
+
+  
+
   .site-shell { padding: 0 22px; }
   .site-header { align-items: flex-start; flex-direction: column; gap: 12px; padding-top: 21px; }
   nav { gap: 21px; }
