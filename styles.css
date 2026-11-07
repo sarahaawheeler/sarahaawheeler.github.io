@@ -19,7 +19,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 .site-name { font-weight: 600; letter-spacing: -0.025em; white-space: nowrap; }
 nav { display: flex; gap: 26px; font-size: 13px; color: #494b47; }
 .intro { padding: 79px 0 74px; }
-h1 { font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: clamp(26px, 3.5vw, 34px); line-height: 1.2; letter-spacing: -0.05em; margin: 0 0 25px; }
+h1 { font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: clamp(26px, 2.5vw, 34px); line-height: 1.2; letter-spacing: -0.05em; margin: 0 0 25px; }
 .intro p { max-width: 605px; margin: 0 0 12px; color: var(--muted); font-size: 15px; }
 .intro .lead { font-size: 18px; line-height: 1.7; color: #343632; }
 .inline-links { display: flex; flex-wrap: wrap; gap: 25px; margin-top: 27px; font-size: 13px; }
