@@ -130,5 +130,126 @@
     <footer class="site-footer"><span>© <span id="year">2026</span> Sarah Wheeler</span><a href="mailto:sannewheeler@gmail.com">Email <span aria-hidden="true">↗</span></a></footer>
   </div>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script>
+(() => {
+  // A small probability-inspired curve, centered in each section divider.
+  // Shapes change with time; the curves never travel along the line.
+  const sections = document.querySelectorAll('.content-section');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const ns = 'http://www.w3.org/2000/svg';
+  const sequences = [
+    ['bimodal', 'normal', 'three', 'triangle', 'right'],
+    ['normal', 'right', 'bimodal', 'left', 'three'],
+    ['three', 'left', 'normal', 'bimodal', 'triangle']
+  ];
+  const dividers = [...sections].map((section, i) => {
+    const svg = document.createElementNS(ns, 'svg');
+    svg.classList.add('section-divider');
+    svg.setAttribute('viewBox', '0 0 1000 32');
+    svg.setAttribute('preserveAspectRatio', 'none');
+    svg.setAttribute('aria-hidden', 'true');
+    
+    const areaLines = document.createElementNS(ns, 'path');
+    areaLines.setAttribute('class', 'area-lines');
+
+    const path = document.createElementNS(ns, 'path');
+    path.setAttribute('class', 'curve-line');
+
+    // The area lines go behind the distribution outline.
+    svg.append(areaLines, path);
+    section.prepend(svg);
+
+    return {
+      path,
+      areaLines,
+      sequence: sequences[i % sequences.length],
+      offset: i * 5
+    };
+  });
+
+  const gaussian = (x, m, s) => Math.exp(-0.5 * ((x - m) / s) ** 2);
+  const shapes = {
+    normal: u => gaussian(u, 0.5, 0.12),
+    right: u => gaussian(u, 0.38, u < 0.38 ? 0.075 : 0.20),
+    left: u => gaussian(u, 0.62, u < 0.62 ? 0.20 : 0.075),
+    triangle: u => Math.max(0, 1 - Math.abs(u - 0.5) / 0.29),
+    bimodal: u => 0.85 * gaussian(u, 0.36, 0.075) + 0.90 * gaussian(u, 0.64, 0.075),
+    three: u => 0.8 * gaussian(u, 0.27, 0.055) + 0.95 * gaussian(u, 0.5, 0.06) + 0.8 * gaussian(u, 0.73, 0.055)
+  };
+  const smooth = t => t * t * (3 - 2 * t);
+
+  
+function draw({ path, areaLines, sequence, offset }, elapsed) {
+  const stage = ((elapsed + offset) / 12) % sequence.length;
+  const a = Math.floor(stage);
+  const b = (a + 1) % sequence.length;
+  const mix = smooth(stage - a);
+
+  const baseline = 30;
+  const start = 340;
+  const width = 320;
+  const amplitude = 22;
+
+  function curveY(x) {
+    const u = (x - start) / width;
+
+    if (u < 0 || u > 1) return baseline;
+
+    const taper =
+      smooth(Math.min(1, u / 0.09)) *
+      smooth(Math.min(1, (1 - u) / 0.09));
+
+    const v =
+      (1 - mix) * shapes[sequence[a]](u) +
+      mix * shapes[sequence[b]](u);
+
+    return baseline - amplitude * v * taper;
+  }
+
+  // Main distribution outline
+  let d = '';
+
+  for (let x = 0; x <= 1000; x += 4) {
+    const y = curveY(x);
+
+    d += (x === 0 ? 'M' : 'L') +
+         x + ' ' + y.toFixed(2) + ' ';
+  }
+
+  path.setAttribute('d', d);
+
+  // Light vertical lines beneath the distribution
+  let hatch = '';
+
+  for (let x = start; x <= start + width; x += 3) {
+    const y = curveY(x);
+
+    if (baseline - y > 0.5) {
+      hatch += `M ${x} ${y.toFixed(2)} L ${x} ${baseline} `;
+    }
+  }
+
+  areaLines.setAttribute('d', hatch);
+}
+
+  let elapsed = 0, last = null, frame = null;
+  function tick(timestamp) {
+    if (last !== null) elapsed += Math.min((timestamp - last) / 1000, 0.05);
+    last = timestamp;
+    dividers.forEach(divider => draw(divider, elapsed));
+    frame = requestAnimationFrame(tick);
+  }
+  function refresh() {
+    if (frame !== null) cancelAnimationFrame(frame);
+    frame = null;
+    last = null;
+    dividers.forEach(divider => draw(divider, elapsed));
+    if (!reduceMotion.matches && !document.hidden) frame = requestAnimationFrame(tick);
+  }
+  reduceMotion.addEventListener('change', refresh);
+  document.addEventListener('visibilitychange', refresh);
+  refresh();
+})();
+</script>
 </body>
 </html>
