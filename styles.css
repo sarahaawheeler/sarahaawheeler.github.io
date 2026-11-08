@@ -49,8 +49,8 @@ nav { display: flex; gap: 26px; font-size: 13px; color: #494b47; }
 .intro-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 100px;
-  gap: 34px;
-  align-items: center;
+  gap: 35px;
+  align-items: start;
 }
 .intro-text { min-width: 0; }
 .intro-portrait { width: 100px; justify-self: end; }
@@ -163,4 +163,55 @@ h3 { margin: 0; font-weight: 550; font-size: 15px; letter-spacing: -0.01em; }
 h1,
 h2 {
   color: #66527A;
+}
+
+/* Minimal editorial timeline for recent updates */
+#research .update-item {
+  position: relative;
+  margin-left: 8px;
+  padding: 0 0 35px 27px;
+  border-left: 1px solid #d8cce3;
+}
+
+#research .update-item::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: -5px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #66527a;
+}
+
+#research .update-item:last-child {
+  border-left-color: transparent;
+  padding-bottom: 0;
+}
+
+#research .update-label {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9885a9;
+}
+
+#research .update-item h3 {
+  color: #66527a;
+  margin: 0 0 9px;
+  line-height: 1.45;
+}
+
+#research .update-item p {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0 0 11px;
+  line-height: 1.75;
+}
+
+#research .update-item > a {
+  font-size: 13px;
 }
